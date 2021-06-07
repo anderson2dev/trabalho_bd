@@ -19,11 +19,6 @@ create table if not exists usuarios (
 
 );
 
-create table if not exists perfis (
-	id uuid primary key default uuid_generate_v4(),
-	id_usuario uuid not null
-);
-
 create table if not exists habilidades (
 	id uuid primary key default uuid_generate_v4(),
 	id_perfil uuid not null,
@@ -53,9 +48,7 @@ create table if not exists avaliacao (
 savepoint termina_criacao_tabelas;
 
 -- relations
-alter table habilidades add constraint fk_perfis foreign key(id_perfil) references perfis(id);
-alter table perfis 
-add constraint fk_usuarios foreign key(id_usuario)
+alter table habilidades add constraint fk_perfis foreign key(id_perfil) references usuarios(id);
 references usuarios(id);
 savepoint liga_habilidades_a_usuarios;
 
