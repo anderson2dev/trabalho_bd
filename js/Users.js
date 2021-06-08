@@ -44,10 +44,14 @@ class Users {
     }
 
     #generateBirthDatesTimeZone() {
-        const date = 1+Math.floor(Math.random()*28);
-        const month = 1+Math.floor(Math.random()*12);
-        const year = 2000 + Math.floor(1+Math.random()*25);
-        return `'${month}-${date}-${year}'`; 
+       const day = Math.floor(Math.random()*27);
+        const month = Math.floor(Math.random()*12);
+        const year = 2000 + Math.floor(Math.random()*25);
+        const hours = Math.floor(Math.random()*23);
+        const minutes = Math.floor(Math.random()*59);
+        const seconds = Math.floor(Math.random()*59);
+        const date = new Date(`${year}-${month}-${day} ${hours}:${minutes}:${seconds}`);
+        return `'${date.toLocaleDateString("PT-BR")} ${date.toLocaleTimeString("PT-BR")}'`; 
     }
 
     #generatePasswords(password_size) {
@@ -90,6 +94,13 @@ class Users {
 
     get mentees_id()  {
         return this.#mentees_id;
+    }
+
+    get id() {
+        return  [
+            ...this.#mentors_id,
+            ...this.#mentees_id
+        ];
     }
 }
 

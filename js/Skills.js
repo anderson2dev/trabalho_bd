@@ -1,12 +1,12 @@
 const {v4} = require('uuid');
 
 class Skills {
-    #profiles_id = [];
+    #users_id = [];
     #id = [];
     #skills_name = ['futebol', 'java', 'javascript', 'c', 'c++', 'dança', 'comunicacao', 'videogame'];
-    constructor(profiles) {   
-        profiles.id.forEach(id => this.#profiles_id.push(id));
-        this.#profiles_id.forEach(() => {
+    constructor(users) {   
+        users.id.forEach(id => this.#users_id.push(id));
+        this.#users_id.forEach(() => {
             this.#id.push(v4());
         })
     }
@@ -17,9 +17,9 @@ class Skills {
     }
 
     generateInserts() {
-        let stmt = "INSERT INTO habilidades(id, id_perfil, nome) values ";
+        let stmt = "INSERT INTO habilidades(id, id_usuario, nome) values ";
         this.#id.forEach((id, index) => {
-            stmt+=`('${id}', '${this.#profiles_id[index]}', ${this.#generateSkillName()})`;
+            stmt+=`('${id}', '${this.#users_id[index]}', ${this.#generateSkillName()})`;
             if(index === this.#id.length - 1) 
                 stmt+=';';
             else

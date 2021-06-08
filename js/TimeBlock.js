@@ -19,16 +19,37 @@ class TimeBlock {
 
     
     #generateDateTimeStamp() {
-        const date = 1+Math.floor(Math.random()*30);
-        const month = 1+Math.floor(Math.random()*12);
+        const date = Math.floor(Math.random()*30);
+        const month = Math.floor(Math.random()*12);
         const year = 2000 + Math.floor(1+Math.random()*25);
-        return `'${month}-${date}-${year}'`; 
+        const hours = Math.floor(Math.random()*23);
+        const minutes = Math.floor(Math.random()*59);
+        const seconds = Math.floor(Math.random()*59);
+        return `$${year}-${month}-${date} ${hours}:${minutes}:${seconds}`; 
+    }
+
+    #generateBeginAndEnd() {
+        let begin = new Date(this.#generateDateTimeStamp());
+        let end = new Date(this.#generateDateTimeStamp());
+        let aux;
+        const ms_1 = begin.getTime();
+        const ms_2 = end.getTime();
+        if( ms_1>= ms_2 ) {
+            aux = begin;
+            begin = end;
+            end = aux;
+        } 
+        return [
+            begin.toLocaleDateString("PT-BR") + ' ' + begin.toLocaleTimeString('PT-BR'),
+            end.toLocaleDateString("PT-BR") + ' ' + end.toLocaleTimeString('PT-BR')
+        ];
     }
 
     generateInserts() {
         let stmt = "INSERT INTO bloco_tempo (id, id_mentor, inicio, fim) values ";
         this.#time_blocks_id.forEach((time_block_id, i) => {
-                stmt += `('${time_block_id}', ${this.#generateMentorId()}, ${this.#generateDateTimeStamp()}, ${this.#generateDateTimeStamp()})`
+                const [begin, end] = this.#generateBeginAndEnd();
+                stmt += `('${time_block_id}', ${this.#generateMentorId()}, '${begin}', '${end}')`
                 if (i==this.#time_blocks_id.length-1) 
                     stmt+=';\n';
                 else 

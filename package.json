@@ -4,8 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "run:seed": "sh initdb.sh 2>pg_sql_error.txt",
-    "generate:seed": "node js/index.js 2> seed_gen_error.txt"
+    "seed:run": "sh initdb.sh 2>pg_sql_error.txt",
+    "seed:generate": "node js/index.js 2> seed_gen_error.txt"
   },
   "dependencies": {
     "uuid": "^8.3.2"
